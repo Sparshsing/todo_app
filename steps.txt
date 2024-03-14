@@ -1,0 +1,24 @@
+Steps
+1. initialize git repository
+    open project folder in VS code and select git from left panel and select Initialize git repository.
+    add a .gitignore file in project folder
+    add myvenv/ and *.pyc and *.sqlite3 to .gitignore file
+1. create virtual environment (windows)
+    > python -m venv myvenv
+    > myvenv\Scripts\activate
+2. setup backend
+    > pip install django djangorestframework
+    > django-admin startproject todo_backend
+    > cd todo_backend
+3. create django app (a module)
+    > python manage.py startapp tasks
+    add 'rest_framework' and 'tasks' to INSTALLED_APPS list in todo_backend/settings.py file
+4. setup database
+    for simplicity we use default sqlite db. For big projects use Postgreql / Mysql.
+    migrate the db (apply changes to db)
+    > python manage.py makemigrations
+    > python manage.py migrate
+5. test app
+    python manage.py runserver
+
+
