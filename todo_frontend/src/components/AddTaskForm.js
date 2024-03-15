@@ -44,7 +44,7 @@ function AddTaskForm({ onTaskAdded }) {
       console.log('task created', newTask)
       // Handle success (e.g., add newTask to state, clear form)
       
-      // onTaskAdded({ title, description });
+      onTaskAdded();
       setTitle('');
       setDescription('');
       setApiError('');

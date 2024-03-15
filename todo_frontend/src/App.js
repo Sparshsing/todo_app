@@ -30,23 +30,23 @@ export default function App() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  useEffect(() => {
-    const fetchTasks = async () => {
-      setLoading(true);
-      try {
-        const response = await fetch('http://localhost:8000/api/tasks/');
-        if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
-        
-        const data = await response.json();
-        setTasks(data);
-      } catch (error) {
-        console.error("Fetch error:", error.message);
-        setError("Failed to load tasks.");
-      } finally {
-        setLoading(false);
-      }
-    };
+  const fetchTasks = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch('http://localhost:8000/api/tasks/');
+      if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+      
+      const data = await response.json();
+      setTasks(data);
+    } catch (error) {
+      console.error("Fetch error:", error.message);
+      setError("Failed to load tasks.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchTasks();
   }, []);
 
@@ -56,6 +56,11 @@ export default function App() {
 
   const handleCloseAddTaskDialog = () => {
     setOpenAddTaskDialog(false);
+  };
+
+  const onTaskAdded = () => {
+    setOpenAddTaskDialog(false);
+    fetchTasks();
   };
 
   const handleSort = () => {
@@ -111,7 +116,7 @@ export default function App() {
           <IconButton onClick={handleCloseAddTaskDialog} sx={{ position: 'absolute', right: 8, top: 8 }}>
             <CloseIcon />
           </IconButton>
-          <AddTaskForm />
+          <AddTaskForm  onTaskAdded={onTaskAdded}/>
         </Dialog>
       </Container>
     </ThemeProvider>
