@@ -28,6 +28,9 @@ Steps
     remove any new .git folder inside todo_frontend. Let the .gitignore file remain.
 8. test run frontend
     > npm start
+9. develop frontend using material ui
+    > npm install @mui/material @emotion/react @emotion/styled
+    > npm install @mui/icons-material
 
 
 
