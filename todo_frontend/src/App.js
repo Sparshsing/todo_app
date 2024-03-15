@@ -1,18 +1,12 @@
-import './App.css';
 import React, { useState, useEffect } from 'react';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import Box from '@mui/material/Box';
+import { Container, Dialog, IconButton, CircularProgress, Box, Typography } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
 
-// import { Grid } from '@mui/material';
+import './App.css';
 import Header from './components/Header';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
-// import TaskForm from './components/TaskForm';
-// import TaskList from './components/TaskList';
-// import Filter from './components/Filter';
-// import Footer from './components/Footer';
-
-import { Container } from '@mui/material';
+import AddTaskForm from './components/AddTaskForm';
 import TaskList from './components/TaskList';
 import TaskControls from './components/TaskControls';
 
@@ -24,23 +18,44 @@ const darkTheme = createTheme({
 
 export default function App() {
 
-  const initialTasks = [
-    { id: 1, title: "Task 1", description: "Description 1 ijsaidasjhkjh  a very long description\nline 1,  sdjskd\n line2", status: "To Do" },
+  const sampleTasks = [
+    { id: 1, title: "Task 1", description: "Description 1", status: "To Do" },
     { id: 2, title: "Task 2", description: "Description 2", status: "In Progress" },
     { id: 3, title: "Task 3", description: "Description 3", status: "Done" },
   ]
 
-  const [tasks, setTasks] = useState(initialTasks);
-  const [filteredTasks, setFilteredTasks] = useState(initialTasks);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [filter, setFilter] = useState('All');
+  const [tasks, setTasks] = useState([]);
+  const [filteredTasks, setFilteredTasks] = useState([]);
+  const [openAddTaskDialog, setOpenAddTaskDialog] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
-  const handleSearch = (searchTerm) => {
-    applyFilters(searchTerm, null);
+  useEffect(() => {
+    const fetchTasks = async () => {
+      setLoading(true);
+      try {
+        const response = await fetch('http://localhost:8000/api/tasks/');
+        if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+        
+        const data = await response.json();
+        setTasks(data);
+      } catch (error) {
+        console.error("Fetch error:", error.message);
+        setError("Failed to load tasks.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchTasks();
+  }, []);
+
+  const handleOpenAddTaskDialog = () => {
+    setOpenAddTaskDialog(true);
   };
 
-  const handleFilter = (filter) => {
-    applyFilters(null, filter);
+  const handleCloseAddTaskDialog = () => {
+    setOpenAddTaskDialog(false);
   };
 
   const handleSort = () => {
@@ -67,13 +82,37 @@ export default function App() {
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
-      <Header></Header>
+      <Header onAddTaskClick={handleOpenAddTaskDialog}></Header>
       
       <Container>
-      {/* Other components like Header */}
-      
+        {/* {error && <Box color="error.main">{error}</Box>}
+        {loading && <CircularProgress />}
         <TaskControls onFilter={applyFilters} onSort={handleSort} />
-        <TaskList tasks={filteredTasks} setTasks={setTasks}/>
+        <TaskList tasks={filteredTasks} setTasks={setTasks}/> */}
+
+        {error ? (
+          <Box display="flex" justifyContent="center" alignItems="center" minHeight="100px">
+            <Typography variant="h6" color="error">
+              {error}
+            </Typography>
+          </Box>
+        ) : loading ? (
+          <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
+            <CircularProgress />
+          </Box>
+        ) : (
+          <>
+            <TaskControls onFilter={applyFilters} onSort={handleSort} />
+            <TaskList tasks={filteredTasks} setTasks={setTasks} />
+          </>
+        )}
+
+        <Dialog open={openAddTaskDialog} onClose={handleCloseAddTaskDialog} aria-labelledby="form-dialog-title">
+          <IconButton onClick={handleCloseAddTaskDialog} sx={{ position: 'absolute', right: 8, top: 8 }}>
+            <CloseIcon />
+          </IconButton>
+          <AddTaskForm />
+        </Dialog>
       </Container>
     </ThemeProvider>
   );

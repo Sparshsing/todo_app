@@ -4,12 +4,12 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import Tooltip from '@mui/material/Tooltip';
 import { deepPurple } from '@mui/material/colors';
 
-function Header() {
+function Header({onAddTaskClick}) {
   return (
     <AppBar position="static" color="primary">
       <Toolbar>
         {/* "+" Icon Button */}
-        <IconButton  color="primary" aria-label="add" size="large" sx={{ marginRight: 2 }}>
+        <IconButton  color="primary" aria-label="add" size="large" onClick={onAddTaskClick}>
           <AddCircleIcon sx={{ fontSize: 45 }}/>
         </IconButton>
 
@@ -23,7 +23,7 @@ function Header() {
         {/* <Avatar sx={{ bgcolor: deepPurple[500] }}>U</Avatar> Replace 'U' with user initials or use an <img> tag for a photo */}
         
         <Tooltip title="Open settings">
-              <IconButton sx>
+              <IconButton >
                 <Avatar alt="Sparsh" src="/static/images/avatar/2.jpg" />
               </IconButton>
             </Tooltip>

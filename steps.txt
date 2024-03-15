@@ -31,6 +31,16 @@ Steps
 9. develop frontend using material ui
     > npm install @mui/material @emotion/react @emotion/styled
     > npm install @mui/icons-material
+10. develop backend
+    add the model, serializer, views, urls
+    create superuser
+    > python manage.py createsuperuser
+    create migrations
+    > python manage.py makemigrations
+    > python manage.py migrate
+    handle cors
+    > pip install django-cors-headers
+    make other CORS changes in settings file
 
 
 

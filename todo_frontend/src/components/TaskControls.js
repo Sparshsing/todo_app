@@ -22,7 +22,7 @@ function TaskControls({ onFilter, onSort }) {
   };
 
   return (
-    <Box sx={{ display: 'flex', alignItems: 'end', gap: 2, marginTop: 2, marginBottom: 0, marginLeft: 2 }}>
+    <Box sx={{ display: 'flex', alignItems: 'start', gap: 2, marginTop: 2, marginBottom: 0, marginLeft: 2 }}>
       {/* Search */}
       <TextField
         variant="outlined"
