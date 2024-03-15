@@ -2,7 +2,6 @@ import React from 'react';
 import { AppBar, Toolbar, Typography, IconButton, Avatar } from '@mui/material';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import Tooltip from '@mui/material/Tooltip';
-import { deepPurple } from '@mui/material/colors';
 
 function Header({onAddTaskClick}) {
   return (
