@@ -119,7 +119,7 @@ function TaskList({ tasks, setTasks }) {
           <TaskItem key={task.id} task={task} onDelete={handleDeleteClick} onStatusChange={handleStatusChange}/>
         ))}
       </List>
-      <Snackbar open={alertOpen} autoHideDuration={6000} anchorOrigin={{ vertical: 'center', horizontal: 'center' }} onClose={() => setAlertOpen(false)}>
+      <Snackbar open={alertOpen} autoHideDuration={6000} anchorOrigin={{ vertical: 'top', horizontal: 'center' }} onClose={() => setAlertOpen(false)}>
         <Alert onClose={() => setAlertOpen(false)} severity="error" sx={{ width: '100%' }}>
             {alertMessage}
         </Alert>

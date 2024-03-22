@@ -16,10 +16,20 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from django.contrib.auth.views import LoginView
 from tasks import views
+from users.views import UserCreate, CurrentUserView, UserProfileView
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('login/', LoginView.as_view(), name='login'),
+    path('api/register/', UserCreate.as_view(), name='register'),
+    path('api/user/profile/', CurrentUserView.as_view(), name='user_profile'),
+    path('api/user/', CurrentUserView.as_view(), name='current-user'),
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/tasks/', views.TaskListCreate.as_view(), name='task-list-create'),
     path('api/tasks/<int:pk>/', views.TaskDetailUpdateDelete.as_view(), name='task-detail-update-delete')
 ]
