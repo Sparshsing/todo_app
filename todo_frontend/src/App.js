@@ -16,13 +16,21 @@ import LoginForm from './components/LoginForm';
 import RegisterForm from './components/RegisterForm';
 import UserProfile from './components/UserProfile';
 
-const darkTheme = createTheme({
-  palette: {
-    mode: 'light',
-  },
-});
 
 export default function App() {
+
+  const darkTheme = createTheme({
+    palette: {
+      mode: 'dark',
+    },
+  });
+  
+  const lightTheme = createTheme({
+    palette: {
+      mode: 'light',
+    },
+  });
+  
 
   // const sampleTasks = [
   //   { id: 1, title: "Task 1", description: "Description 1", status: "To Do" },
@@ -35,6 +43,8 @@ export default function App() {
   const [openAddTaskDialog, setOpenAddTaskDialog] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [isDarkTheme, setIsDarkTheme] = useState(true);
+  
 
   const fetchTasks = async () => {
     setLoading(true);
@@ -55,6 +65,11 @@ export default function App() {
   useEffect(() => {
     fetchTasks();
   }, []);
+
+  const toggleTheme = () => {
+    console.log('theme change', isDarkTheme)
+    setIsDarkTheme(!isDarkTheme);
+  };
 
   const handleOpenAddTaskDialog = () => {
     setOpenAddTaskDialog(true);
@@ -92,7 +107,7 @@ export default function App() {
 
   return (
     <AuthProvider>
-    <ThemeProvider theme={darkTheme}>
+    <ThemeProvider theme={isDarkTheme ? darkTheme: lightTheme}>
       <CssBaseline />
       <Router>
       <Routes>
@@ -102,7 +117,7 @@ export default function App() {
       <Route path="/tasks" element={
         <PrivateRoute>
           <>
-          <Header onAddTaskClick={handleOpenAddTaskDialog}></Header>
+          <Header onAddTaskClick={handleOpenAddTaskDialog} onThemeClick={toggleTheme}></Header>
           <Container>
             {error ? (
               <Box display="flex" justifyContent="center" alignItems="center" minHeight="100px">

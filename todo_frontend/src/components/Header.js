@@ -1,11 +1,12 @@
 import React, { useState, useContext } from 'react';
 import { AppBar, Toolbar, Typography, IconButton, Avatar, Menu, MenuItem } from '@mui/material';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
+import ContrastIcon from '@mui/icons-material/Contrast';
 import { useNavigate } from 'react-router-dom';
 import Tooltip from '@mui/material/Tooltip';
 import { useAuth } from '../AuthContext';
 
-function Header({onAddTaskClick}) {
+function Header({onAddTaskClick, onThemeClick}) {
 
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState(null);
@@ -48,6 +49,10 @@ function Header({onAddTaskClick}) {
         <Typography variant="h4" component="div" sx={{ flexGrow: 1 }}>
           Tasks
         </Typography>
+
+        <IconButton  color="white" aria-label="add" size="small" onClick={onThemeClick}>
+          <ContrastIcon sx={{ fontSize: 20 }}/>
+        </IconButton>
 
         {/* User Photo */}
         
